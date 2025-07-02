@@ -12,8 +12,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Lấy movie đầu tiên làm hero banner
-    final heroMovie = SampleData.trendingMovies.first;
+    // Lấy các movies cho hero banner carousel
+    final heroMovies = [
+      ...SampleData.trending.take(3), // 3 phim từ Trending
+      ...SampleData.newOnNetflix.take(2), // 2 phim từ Mới trên Netflix
+    ];
 
     return Scaffold(
       backgroundColor: AppColors.netflixBlack,
@@ -34,33 +37,18 @@ class HomeScreen extends StatelessWidget {
           // Content
           SliverList(
             delegate: SliverChildListDelegate([
-              // Hero Banner
-              HeroBanner(movie: heroMovie),
+              // Thêm khoảng cách giữa header và hero banner
+              const SizedBox(height: AppSizes.smallPadding),
+              
+              // Hero Banner Carousel
+              HeroBanner(movies: heroMovies),
 
               const SizedBox(height: AppSizes.largePadding),
 
-              // Continue Watching
-              ContinueWatchingList(
-                movies: SampleData.trendingMovies.take(4).toList(),
-              ),
-
-              const SizedBox(height: AppSizes.largePadding),
-
-              // Popular on Netflix (với card lớn)
-              PopularMovieList(
-                title: 'Popular on Netflix',
-                movies: SampleData.popularMovies,
-                onSeeAllPressed: () {
-                  print('See all Popular movies');
-                },
-              ),
-
-              const SizedBox(height: AppSizes.largePadding),
-
-              // Trending Now
+              // Trending - Phim đang thịnh hành
               MovieList(
-                title: 'Trending Now',
-                movies: SampleData.trendingMovies,
+                title: 'Trending',
+                movies: SampleData.trending,
                 onSeeAllPressed: () {
                   print('See all Trending movies');
                 },
@@ -68,38 +56,47 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: AppSizes.largePadding),
 
-              // Action Movies
-              MovieList(
-                title: 'Action',
-                movies: SampleData.actionMovies,
+              // Top 10 series tại Việt Nam hôm nay (với ranking numbers)
+              Top10MovieList(
+                title: 'Top 10 series tại Việt Nam hôm nay',
+                movies: SampleData.top10Vietnam,
                 onSeeAllPressed: () {
-                  print('See all Action movies');
+                  print('See all Top 10 Vietnam');
                 },
               ),
 
               const SizedBox(height: AppSizes.largePadding),
 
-              // Netflix Originals
+              // Mới trên Netflix
               MovieList(
-                title: 'Netflix Originals',
-                movies: SampleData.trendingMovies
-                    .where((movie) => movie.isNetflixOriginal)
-                    .toList(),
+                title: 'Mới trên Netflix',
+                movies: SampleData.newOnNetflix,
                 onSeeAllPressed: () {
-                  print('See all Netflix Originals');
+                  print('See all New on Netflix');
                 },
               ),
 
               const SizedBox(height: AppSizes.largePadding),
 
-              // My List (có thể empty state)
+              // Anime
               MovieList(
-                title: 'My List',
-                movies: SampleData.popularMovies.take(3).toList(),
+                title: 'Anime',
+                movies: SampleData.anime,
                 onSeeAllPressed: () {
-                  print('See all My List');
+                  print('See all Anime');
                 },
-                showSeeAll: false, // Không hiển thị "See all" cho My List
+              ),
+
+              const SizedBox(height: AppSizes.largePadding),
+
+              // Phim Mỹ lồng tiếng Việt
+              MovieList(
+                title: 'Phim Mỹ lồng tiếng Việt',
+                movies: SampleData.americanMoviesVietnameseDub,
+                onSeeAllPressed: () {
+                  print('See all American Movies Vietnamese Dub');
+                },
+                showSeeAll: true,
               ),
 
               // Bottom spacing để tránh bị che bởi bottom navigation

@@ -1,18 +1,42 @@
+// lib/widgets/hero_banner.dart
+
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:card_swiper/card_swiper.dart';
 import '../constants/app_colors.dart';
 import '../models/movie.dart';
+import '../screens/movie_detail_screen.dart';
 
 class HeroBanner extends StatelessWidget {
-  final Movie movie;
+  final List<Movie> movies; // Thay đổi để nhận list movies
 
   const HeroBanner({
     super.key,
-    required this.movie,
+    required this.movies,
   });
 
   @override
   Widget build(BuildContext context) {
+    return Container(
+      height: AppSizes.heroBannerHeight,
+      width: double.infinity,
+      child: Swiper(
+        itemCount: movies.length,
+        autoplay: true,
+        autoplayDelay: 5000, // 5 giây
+        duration: 800, // Animation mượt hơn
+        // Bỏ pagination dots để clean hơn
+        pagination: null,
+        control: null, // Bỏ control arrows
+        itemBuilder: (context, index) {
+          final movie = movies[index];
+          return _buildHeroBannerItem(movie, context);
+        },
+      ),
+    );
+  }
+
+  Widget _buildHeroBannerItem(Movie movie, BuildContext context) {
     return Container(
       height: AppSizes.heroBannerHeight,
       width: double.infinity,
@@ -42,18 +66,19 @@ class HeroBanner extends StatelessWidget {
             ),
           ),
 
-          // Gradient overlay (từ trong suốt đến đen)
+          // Gradient overlay đẹp hơn
           Container(
             height: AppSizes.heroBannerHeight,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                stops: const [0.0, 0.7, 1.0],
+                stops: const [0.0, 0.5, 0.8, 1.0],
                 colors: [
                   Colors.transparent,
-                  AppColors.netflixBlack.withOpacity(0.5),
-                  AppColors.netflixBlack,
+                  Colors.transparent,
+                  AppColors.netflixBlack.withOpacity(0.6),
+                  AppColors.netflixBlack.withOpacity(0.9),
                 ],
               ),
             ),
@@ -73,30 +98,23 @@ class HeroBanner extends StatelessWidget {
                   if (movie.isNetflixOriginal) ...[
                     Row(
                       children: [
-                        Image.asset(
-                          'assets/images/netflix_logo_small.png',
-                          height: 20,
+                        Container(
                           width: 20,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container(
-                              height: 20,
-                              width: 20,
-                              decoration: const BoxDecoration(
-                                color: AppColors.netflixRed,
-                                shape: BoxShape.circle,
+                          height: 20,
+                          decoration: const BoxDecoration(
+                            color: AppColors.netflixRed,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Center(
+                            child: Text(
+                              'N',
+                              style: TextStyle(
+                                color: AppColors.netflixWhite,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
                               ),
-                              child: const Center(
-                                child: Text(
-                                  'N',
-                                  style: TextStyle(
-                                    color: AppColors.netflixWhite,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
+                            ),
+                          ),
                         ),
                         const SizedBox(width: 8),
                         const Text(
@@ -113,144 +131,131 @@ class HeroBanner extends StatelessWidget {
                     const SizedBox(height: 8),
                   ],
 
-                  // Movie title
-                  Text(
-                    movie.title,
-                    style: const TextStyle(
-                      color: AppColors.netflixWhite,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
+                  // Movie title với shadow
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
                     ),
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  // Movie info (year, rating, genre)
-                  Row(
-                    children: [
-                      Text(
-                        '${movie.year}',
-                        style: const TextStyle(
-                          color: AppColors.netflixLightGrey,
-                          fontSize: 14,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      
-                      // Rating
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.star,
-                            color: Colors.yellow,
-                            size: 16,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            movie.rating.toString(),
-                            style: const TextStyle(
-                              color: AppColors.netflixLightGrey,
-                              fontSize: 14,
-                            ),
+                    child: Text(
+                      movie.title,
+                      style: TextStyle(
+                        color: AppColors.netflixWhite,
+                        fontSize: 32,
+                        fontWeight: FontWeight.w900,
+                        shadows: [
+                          Shadow(
+                            color: AppColors.netflixBlack.withOpacity(0.8),
+                            offset: const Offset(2, 2),
+                            blurRadius: 4,
                           ),
                         ],
                       ),
-                      
-                      const SizedBox(width: 16),
-                      
-                      Text(
-                        movie.genre,
-                        style: const TextStyle(
-                          color: AppColors.netflixLightGrey,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
 
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 12),
 
-                  // Action buttons
-                  Row(
-                    children: [
-                      // Play button
-                      Expanded(
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            // TODO: Implement play functionality
-                            print('Play ${movie.title}');
-                          },
-                          icon: const Icon(
-                            Icons.play_arrow,
-                            color: AppColors.netflixBlack,
-                          ),
-                          label: const Text(
-                            'Play',
-                            style: TextStyle(
-                              color: AppColors.netflixBlack,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.netflixWhite,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(width: 12),
-
-                      // My List button
-                      Expanded(
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            // TODO: Implement add to list functionality
-                            print('Add ${movie.title} to My List');
-                          },
-                          icon: const Icon(
-                            Icons.add,
+                  // Movie info với container nền
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.netflixBlack.withOpacity(0.7),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Năm
+                        Text(
+                          '${movie.year}',
+                          style: const TextStyle(
                             color: AppColors.netflixWhite,
-                          ),
-                          label: const Text(
-                            'My List',
-                            style: TextStyle(
-                              color: AppColors.netflixWhite,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.netflixGrey,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4),
-                            ),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ),
-
-                      const SizedBox(width: 12),
-
-                      // Info button
-                      Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.netflixGrey,
-                          borderRadius: BorderRadius.circular(20),
+                        
+                        const SizedBox(width: 12),
+                        
+                        // Rating với icon sao
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                              size: 16,
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              movie.rating.toString(),
+                              style: const TextStyle(
+                                color: AppColors.netflixWhite,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
-                        child: IconButton(
-                          onPressed: () {
-                            // TODO: Implement info functionality
-                            print('Show info for ${movie.title}');
-                          },
-                          icon: const Icon(
-                            Icons.info_outline,
+                        
+                        const SizedBox(width: 12),
+                        
+                        // Thể loại
+                        Text(
+                          movie.genre,
+                          style: const TextStyle(
                             color: AppColors.netflixWhite,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // Play button đẹp hơn
+                  Container(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        // Navigate to movie detail
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MovieDetailScreen(movie: movie),
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.play_arrow,
+                        color: AppColors.netflixBlack,
+                        size: 32,
                       ),
-                    ],
+                      label: const Text(
+                        'Phát',
+                        style: TextStyle(
+                          color: AppColors.netflixBlack,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.netflixWhite,
+                        elevation: 8, // Shadow đẹp
+                        shadowColor: AppColors.netflixBlack.withOpacity(0.3),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
