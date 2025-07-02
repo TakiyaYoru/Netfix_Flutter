@@ -1,8 +1,7 @@
-// lib/screens/main_screen.dart
-
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import 'home_screen.dart';
+import 'card_design_practice_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -15,37 +14,35 @@ class _MainScreenState extends State<MainScreen> {
   // Chỉ số của tab hiện tại
   int _currentIndex = 0;
   
-  // Danh sách các screen - chỉ 3 screen như Netflix Việt Nam
+  // Danh sách các screen - thêm Card Design Practice
   final List<Widget> _screens = [
     const HomeScreen(),
     const PlaceholderScreen(title: 'Mới & Hot'),
     const PlaceholderScreen(title: 'Netflix của tôi'),
+    const CardDesignPracticeScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Body hiển thị screen hiện tại
       body: _screens[_currentIndex],
       
-      // Bottom Navigation Bar giống Netflix
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
-            _currentIndex = index; // Cập nhật tab được chọn
+            _currentIndex = index; 
           });
         },
         
-        // Styling cho bottom nav
-        type: BottomNavigationBarType.fixed, // Hiển thị tất cả tabs
+        type: BottomNavigationBarType.fixed, 
         backgroundColor: AppColors.netflixBlack,
         selectedItemColor: AppColors.netflixWhite,
         unselectedItemColor: AppColors.netflixLightGrey,
         selectedFontSize: 12,
         unselectedFontSize: 12,
         
-        // Danh sách các tab - chỉ 3 tab như Netflix Việt Nam
+        // Danh sách các tab
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -59,13 +56,16 @@ class _MainScreenState extends State<MainScreen> {
             icon: Icon(Icons.person),
             label: 'Netflix của tôi',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.design_services),
+            label: 'Pr: Card design',
+          ),
         ],
       ),
     );
   }
 }
 
-// Widget tạm cho các screen chưa implement
 class PlaceholderScreen extends StatelessWidget {
   final String title;
   

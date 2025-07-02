@@ -1,5 +1,3 @@
-// lib/widgets/hero_banner.dart
-
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:card_swiper/card_swiper.dart';
@@ -8,7 +6,7 @@ import '../models/movie.dart';
 import '../screens/movie_detail_screen.dart';
 
 class HeroBanner extends StatelessWidget {
-  final List<Movie> movies; // Thay đổi để nhận list movies
+  final List<Movie> movies; 
 
   const HeroBanner({
     super.key,
@@ -23,11 +21,10 @@ class HeroBanner extends StatelessWidget {
       child: Swiper(
         itemCount: movies.length,
         autoplay: true,
-        autoplayDelay: 5000, // 5 giây
-        duration: 800, // Animation mượt hơn
-        // Bỏ pagination dots để clean hơn
+        autoplayDelay: 5000,
+        duration: 800, 
         pagination: null,
-        control: null, // Bỏ control arrows
+        control: null, 
         itemBuilder: (context, index) {
           final movie = movies[index];
           return _buildHeroBannerItem(movie, context);
@@ -66,7 +63,6 @@ class HeroBanner extends StatelessWidget {
             ),
           ),
 
-          // Gradient overlay đẹp hơn
           Container(
             height: AppSizes.heroBannerHeight,
             decoration: BoxDecoration(
@@ -84,7 +80,6 @@ class HeroBanner extends StatelessWidget {
             ),
           ),
 
-          // Content overlay
           Positioned(
             bottom: 0,
             left: 0,
@@ -94,7 +89,6 @@ class HeroBanner extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Netflix Original badge (nếu có)
                   if (movie.isNetflixOriginal) ...[
                     Row(
                       children: [
@@ -131,7 +125,7 @@ class HeroBanner extends StatelessWidget {
                     const SizedBox(height: 8),
                   ],
 
-                  // Movie title với shadow
+
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4),
@@ -157,7 +151,7 @@ class HeroBanner extends StatelessWidget {
 
                   const SizedBox(height: 12),
 
-                  // Movie info với container nền
+                  // Movie info
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 12,
@@ -182,7 +176,7 @@ class HeroBanner extends StatelessWidget {
                         
                         const SizedBox(width: 12),
                         
-                        // Rating với icon sao
+                        // Rating 
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -220,7 +214,7 @@ class HeroBanner extends StatelessWidget {
 
                   const SizedBox(height: 20),
 
-                  // Play button đẹp hơn
+                  // Play button 
                   Container(
                     width: double.infinity,
                     height: 50,
@@ -249,7 +243,7 @@ class HeroBanner extends StatelessWidget {
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.netflixWhite,
-                        elevation: 8, // Shadow đẹp
+                        elevation: 8, 
                         shadowColor: AppColors.netflixBlack.withOpacity(0.3),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),

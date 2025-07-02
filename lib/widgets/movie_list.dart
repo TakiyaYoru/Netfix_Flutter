@@ -1,5 +1,3 @@
-// lib/widgets/movie_list.dart
-
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import '../models/movie.dart';
@@ -25,7 +23,6 @@ class MovieList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Section header với title và "See All"
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: AppSizes.mediumPadding,
@@ -33,7 +30,6 @@ class MovieList extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Section title
               Text(
                 title,
                 style: const TextStyle(
@@ -43,7 +39,6 @@ class MovieList extends StatelessWidget {
                 ),
               ),
 
-              // "See All" button
               if (showSeeAll)
                 GestureDetector(
                   onTap: onSeeAllPressed,
@@ -62,9 +57,8 @@ class MovieList extends StatelessWidget {
 
         const SizedBox(height: AppSizes.smallPadding),
 
-        // Horizontal scrolling movie list
         SizedBox(
-          height: AppSizes.movieCardHeight + 20, // Card height + thêm một chút space
+          height: AppSizes.movieCardHeight + 20, 
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(
@@ -75,7 +69,6 @@ class MovieList extends StatelessWidget {
               return MovieCard(
                 movie: movies[index],
                 onTap: () {
-                  // Navigate to movie detail
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -92,7 +85,6 @@ class MovieList extends StatelessWidget {
   }
 }
 
-// Widget đặc biệt cho Top 10 với ranking numbers
 class Top10MovieList extends StatelessWidget {
   final String title;
   final List<Movie> movies;
@@ -110,7 +102,6 @@ class Top10MovieList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Section header
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: AppSizes.mediumPadding,
@@ -132,7 +123,6 @@ class Top10MovieList extends StatelessWidget {
 
         const SizedBox(height: AppSizes.smallPadding),
 
-        // Horizontal scrolling với ranking numbers
         SizedBox(
           height: AppSizes.movieCardHeight + 20,
           child: ListView.builder(

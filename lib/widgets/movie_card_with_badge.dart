@@ -1,15 +1,13 @@
-// lib/widgets/movie_card_with_badge.dart
-
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../constants/app_colors.dart';
 import '../models/movie.dart';
 
 enum BadgeType {
-  muaMoi, // Mùa mới
-  tapMoi, // Tập mới
-  top10,  // TOP 10
-  none,   // Không có badge
+  muaMoi, 
+  tapMoi, 
+  top10, 
+  none,  
 }
 
 class MovieCardWithBadge extends StatelessWidget {
@@ -94,7 +92,7 @@ class MovieCardWithBadge extends StatelessWidget {
               ),
             ),
 
-            // Badge overlay
+
             if (badgeType != BadgeType.none)
               Positioned(
                 top: 8,
@@ -102,7 +100,7 @@ class MovieCardWithBadge extends StatelessWidget {
                 child: _buildBadge(),
               ),
 
-            // Netflix N logo (top right)
+            // Netflix N logo 
             Positioned(
               top: 8,
               right: 8,

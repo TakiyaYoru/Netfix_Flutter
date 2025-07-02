@@ -1,5 +1,3 @@
-// lib/screens/movie_detail_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../constants/app_colors.dart';
@@ -410,7 +408,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
 
                     const SizedBox(height: 24),
 
-                    // Action icons row
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -573,7 +570,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen>
             ),
           ),
           const SizedBox(height: 20),
-          // Episodes list
           Expanded(
             child: ListView.builder(
               itemCount: 3,

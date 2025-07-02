@@ -1,5 +1,3 @@
-// lib/widgets/movie_card.dart
-
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../constants/app_colors.dart';
@@ -9,20 +7,19 @@ import '../screens/movie_detail_screen.dart';
 class MovieCard extends StatelessWidget {
   final Movie movie;
   final VoidCallback? onTap;
-  final bool showRanking; // Hiển thị số thứ tự lớn cho Top 10
+  final bool showRanking;
 
   const MovieCard({
     super.key,
     required this.movie,
     this.onTap,
-    this.showRanking = false, // Mặc định là false
+    this.showRanking = false, 
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap ?? () {
-        // Default navigation to movie detail screen
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -89,7 +86,7 @@ class MovieCard extends StatelessWidget {
               ),
             ),
 
-            // Netflix logo (top left)
+            // Netflix logo
             Positioned(
               top: 8,
               left: 8,
@@ -106,7 +103,7 @@ class MovieCard extends StatelessWidget {
               ),
             ),
 
-            // Badge (top right)
+            // Badge
             if (movie.badge != null)
               Positioned(
                 top: 8,
@@ -133,7 +130,7 @@ class MovieCard extends StatelessWidget {
                 ),
               ),
 
-            // Large ranking number (for Top 10)
+
             if (showRanking && movie.ranking != null)
               Positioned(
                 bottom: -10,

@@ -1,5 +1,3 @@
-// lib/main.dart
-
 import 'package:flutter/material.dart';
 import 'constants/app_colors.dart';
 import 'screens/main_screen.dart';
@@ -15,13 +13,12 @@ class NetflixCloneApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Netflix Clone',
-      debugShowCheckedModeBanner: false, // Ẩn banner debug
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // Thiết lập theme Netflix
         primarySwatch: Colors.red,
         primaryColor: AppColors.netflixRed,
         scaffoldBackgroundColor: AppColors.netflixBlack,
-        fontFamily: 'Roboto', // Font mặc định
+        fontFamily: 'Roboto', 
         
         // Thiết lập màu text mặc định
         textTheme: const TextTheme(
