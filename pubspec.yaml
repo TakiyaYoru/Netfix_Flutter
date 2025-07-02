@@ -1,0 +1,20 @@
+name: netflix_movie
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cached_network_image: ^3.3.1
+  card_swiper: ^3.0.0
+  material_symbols_icons: ^4.2719.3
+
+  provider: ^6.1.1
+
+
+flutter:
+  uses-material-design: true
